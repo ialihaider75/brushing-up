@@ -72,6 +72,7 @@ class BST:
 
 tree = BST()
 root = tree.root
+sorted_array = [3,4,5,6,7,8,9]
 root = tree.insert_node(root,5)
 root = tree.insert_node(root,4)
 root = tree.insert_node(root,6)
@@ -90,3 +91,19 @@ tree.queue.append(root)
 tree.level_order_traversal(tree.queue)
 print("The height of the tree: " + str(tree.height_of_tree(root)))
 print("The number 6 exists in tree: " if tree.search_in_tree(root,6) else "The number 6 doesn't exist in tree")
+
+# Following is the implementation of construction of BST from given InOrder Traversal
+
+def construct_tree_with_in_order_traversal(sorted_array,root,tree):
+    if len(sorted_array) > 1:
+        mid = int(0 + (len(sorted_array) - 0) / 2)
+        root = tree.insert_node(root,sorted_array[mid])
+        left_array = sorted_array[0:mid]
+        right_array = sorted_array[mid:len(sorted_array)]
+        root = construct_tree_with_in_order_traversal(left_array,root,tree)
+        root = construct_tree_with_in_order_traversal(right_array,root,tree)
+    return root
+    
+# calling     
+root = construct_tree_with_in_order_traversal(sorted_array,root,tree)
+tree.inorder_traversal(root)
